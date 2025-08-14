@@ -30,8 +30,3 @@ jobs:
       - name: Run scraper
         run: python scraper.py --key_path api_key.txt --country_code_path country_codes.txt --output_dir output
 
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: trending-csv
-          path: output/*.csv
