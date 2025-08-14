@@ -1,0 +1,37 @@
+name: trending-scrape
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 6 * * *'  # запуск каждый день в 06:00 UTC
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Prepare files
+        env:
+          YT_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          echo "$YT_KEY" > api_key.txt
+          printf "US\n" > country_codes.txt
+          mkdir -p output
+
+      - name: Run scraper
+        run: python scraper.py --key_path api_key.txt --country_code_path country_codes.txt --output_dir output
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: trending-csv
+          path: output/*.csv
