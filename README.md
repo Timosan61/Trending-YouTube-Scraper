@@ -31,3 +31,6 @@ The script is fairly simple to run, it takes the following optional parameters:
 ## License
 
 This project is licensed under the BSD 2-Clause License - see the LICENSE.md file for details
+
+
+<!-- Security scan triggered at 2025-10-08 08:49:53 -->
